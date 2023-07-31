@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+      }
+    </script>
+
+    <style>
+      .done {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{message}}</h1>
+
+      <h1>{{ message.split('').reverse().join('') }}</h1>
+
+      <h2>{{sub_message}}</h2>
+
+      <h3 style="font-size: xx-large">{{count}}</h3>
+      <!-- v-on directive -->
+      <button v-on:click="increment">Increase Count v-on</button>
+      <button @click="increment">Increase Count @</button>
+
+      <input v-model="text" />
+      <h4>{{text}}</h4>
+      <!-- Conditional Rendering -->
+
+      <h1 v-if="check">It is true</h1>
+      <h1 v-else>False</h1>
+
+      <!-- List Rendering -->
+      <div
+        style="
+          width: 70%;
+          text-align: center;
+          background-color: aqua;
+          padding: 20px;
+        "
+      >
+        <form @submit.prevent="addItem">
+          <input v-model="item" type="text" />
+          <button>Add Item</button>
+        </form>
+        <ul>
+          <li v-for="item in filterItems" :key="item.id">
+            <!-- <li v-for="item in list" :key="item.id"> -->
+            <input type="checkbox" v-model="item.done" />
+            <span :class="{done: item.done}"> {{item}} </span>
+
+            <button @click="removeItem(item)">X</button>
+          </li>
+        </ul>
+
+        <button @click="hide = !hide">{{hide ? 'Show' : 'Hide'}}</button>
+      </div>
+    </div>
+
+    <script type="module">
+      import { createApp } from "vue";
+
+      let id = 0;
+
+      createApp({
+        data() {
+          return {
+            message: "Hello, world!",
+            sub_message: "This is message!",
+            count: 0,
+            text: "Hello",
+            check: true,
+            item: "",
+            list: [],
+            hide: false,
+            doneValue: false,
+          };
+        },
+        computed: {
+          filterItems() {
+            return this.hide ? this.list.filter((t) => !t.done) : this.list;
+          },
+        },
+        methods: {
+          increment() {
+            this.count++;
+          },
+          addItem() {
+            this.list.push({
+              id: id++,
+              value: this.item,
+              done: this.doneValue,
+            });
+            this.item = "";
+          },
+          removeItem(item) {
+            this.list = this.list.filter((t) => t.id !== item.id);
+          },
+          // To do
+          reverseMessage() {},
+          // Create alert method
+
+          alertMethod() {},
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

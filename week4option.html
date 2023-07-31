@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{message}}</h1>
+      <h2>{{sub_message}}</h2>
+      <ul>
+        <li v-for="item in list">{{item}}</li>
+      </ul>
+
+      <input type="text" v-model="item" />
+      {{item}}
+    </div>
+
+    <script type="module">
+      import { createApp } from "vue";
+
+      createApp({
+        data() {
+          return {
+            message: "Hello Vue!",
+            sub_message: "This is sub message!",
+            count: 0,
+            list: [1, 2, 3, 4],
+            item: "",
+          };
+        },
+        methods: {
+          increament() {
+            this.count++;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
